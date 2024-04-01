@@ -23,28 +23,29 @@ const Register = (props) => {
     const phone = ev.target.phone.value;
     if (country === "Select Country") toast.error("Select your country !");
     if (password !== confirmpassword) toast.error("Passwords do not match !");
-
-    const formData = {
-      name: name,
-      email: email,
-      password: password,
-      country: country,
-      phone: phone,
-    };
-    try {
-      const res = await axios.post(URL, formData);
-      const data = res.data;
-      if (data.success === true) {
-        toast.success(data.message);
-        setIsLoggedIn(true);
-        setName(name);
-        setEmail(email);
-        navigate("/profile");
-      } else {
-        toast.error(data.message);
+    else {
+      const formData = {
+        name: name,
+        email: email,
+        password: password,
+        country: country,
+        phone: phone,
+      };
+      try {
+        const res = await axios.post(URL, formData);
+        const data = res.data;
+        if (data.success === true) {
+          toast.success(data.message);
+          setIsLoggedIn(true);
+          setName(name);
+          setEmail(email);
+          navigate("/profile");
+        } else {
+          toast.error(data.message);
+        }
+      } catch (err) {
+        console.log("Some error occured", err);
       }
-    } catch (err) {
-      console.log("Some error occured", err);
     }
   };
 
