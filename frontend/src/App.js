@@ -13,12 +13,21 @@ import { useState } from "react";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
-    <div className="md:h-screen">
+    <div className="md:h-screen bg-purple-100">
       <BrowserRouter>
         <ToastContainer />
-        <AppNavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <AppNavBar
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          name={name}
+          setName={setName}
+          email={email}
+          setEmail={setEmail}
+        />
         <div>
           <Routes>
             <Route
@@ -35,6 +44,8 @@ const App = () => {
                 <Register
                   isLoggedIn={isLoggedIn}
                   setIsLoggedIn={setIsLoggedIn}
+                  setName={setName}
+                  setEmail={setEmail}
                 />
               }
             />
@@ -42,7 +53,12 @@ const App = () => {
               path="login"
               exact
               element={
-                <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                <Login
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                  setName={setName}
+                  setEmail={setEmail}
+                />
               }
             />
             <Route
@@ -58,10 +74,7 @@ const App = () => {
               path="profile"
               exact
               element={
-                <Profile
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                />
+                <Profile isLoggedIn={isLoggedIn} name={name} email={email} />
               }
             />
           </Routes>

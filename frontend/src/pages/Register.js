@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import CountryInput from "../components/CountryInput";
 import { useEffect } from "react";
 
 const URL = process.env.REACT_APP_BACKEND_URL + "/api/register";
 const Register = (props) => {
-  const { isLoggedIn, setIsLoggedIn } = props;
+  const { isLoggedIn, setIsLoggedIn, setName, setEmail } = props;
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +37,8 @@ const Register = (props) => {
       if (data.success === true) {
         toast.success(data.message);
         setIsLoggedIn(true);
+        setName(name);
+        setEmail(email);
         navigate("/profile");
       } else {
         toast.error(data.message);
@@ -48,8 +49,8 @@ const Register = (props) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-lg xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full flex flex-col items-center justify-center px-6 py-8 mx-auto my-5 lg:py-0">
+      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
             Create an account
@@ -61,83 +62,106 @@ const Register = (props) => {
           >
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="name" value="Name" className="required" />
+                <label htmlFor="name" className="text-sm font-medium required">
+                  Name
+                </label>
               </div>
-              <TextInput
+              <input
                 id="name"
                 name="name"
-                type="input"
+                type="text"
                 placeholder="Your Name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                 required
               />
             </div>
 
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email" value="Email" className="required" />
+                <label htmlFor="email" className="text-sm font-medium required">
+                  Email
+                </label>
               </div>
               <input
                 type="email"
                 name="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                 placeholder="Your Email"
                 required
               />
             </div>
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="password"
-                  value="Password"
-                  className="required"
+
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                <div className="mb-2 block">
+                  <label
+                    htmlFor="password"
+                    className="text-sm font-medium required"
+                  >
+                    Password
+                  </label>
+                </div>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Your Password"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  required
                 />
               </div>
-              <TextInput
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Your Password"
-                required
-              />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="confirmpassword"
-                  value="Confirm Password"
-                  className="required"
+              <div>
+                <div className="mb-2 block">
+                  <label
+                    htmlFor="confirmpassword"
+                    className="text-sm font-medium required"
+                  >
+                    Confirm Password
+                  </label>
+                </div>
+                <input
+                  type="password"
+                  name="confirmpassword"
+                  id="confirmpassword"
+                  placeholder="Re-enter Password"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  required
                 />
               </div>
-              <TextInput
-                type="password"
-                name="confirmpassword"
-                id="confirmpassword"
-                placeholder="Re-enter Password"
-                required
-              />
             </div>
 
             <CountryInput />
-            <div className="max-w-md">
+            <div className="max-w-xl">
               <div className="mb-2 block">
-                <Label htmlFor="phone" value="Phone Number" />
+                <label htmlFor="phone" className="text-sm font-medium">
+                  Phone Number
+                </label>
               </div>
-              <TextInput id="phone" name="phone" type="input" maxLength={10} />
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                maxLength={10}
+                pattern="^[79][0-9]{9}"
+                placeholder="1234567890"
+                aria-errormessage="Phone number must start with 7 or 9"
+              />
             </div>
 
             <div className="flex items-start">
               <div className="flex items-center h-5">
-                <Checkbox
+                <input
                   id="terms"
-                  aria-describedby="terms"
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-purple-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-purple-600 dark:ring-offset-gray-800"
-                  color="purple"
+                  type="checkbox"
+                  class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   required
+                  aria-describedby="terms"
                 />
               </div>
               <div className="ml-3 text-sm">
-                <Label
+                <label
                   htmlFor="terms"
                   className="font-light text-gray-500 dark:text-gray-300"
                 >
@@ -148,17 +172,21 @@ const Register = (props) => {
                   >
                     Terms and Conditions
                   </a>
-                </Label>
+                </label>
               </div>
             </div>
-            <Button className="w-full" type="submit" color="purple">
+
+            <button
+              type="submit"
+              class="w-full focus:outline-none text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-500 dark:hover:bg-purple-600 dark:focus:ring-purple-800"
+            >
               Create an account
-            </Button>
+            </button>
             <p className="text-center text-sm text-gray-500">
               Already have an account?{" "}
               <a
                 href="login"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                className="font-semibold leading-6 text-purple-600 hover:text-purple-500"
               >
                 Login Here
               </a>
